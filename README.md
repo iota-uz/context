@@ -1,6 +1,12 @@
-# @foundry/context
+# @diyor28/context
+
+[![npm version](https://badge.fury.io/js/@diyor28%2Fcontext.svg)](https://badge.fury.io/js/@diyor28%2Fcontext)
+[![CI](https://github.com/iota-uz/context/actions/workflows/ci.yml/badge.svg)](https://github.com/iota-uz/context/actions)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 Context management library for LLM conversations with deterministic block ordering, token budgeting, and multi-provider support.
+
+Originally part of [foundry](https://github.com/iota-uz/foundry), now extracted as a standalone package for use in any LLM application.
 
 ## Features
 
@@ -16,7 +22,14 @@ Context management library for LLM conversations with deterministic block orderi
 ## Installation
 
 ```bash
-pnpm add @foundry/context
+# npm
+npm install @diyor28/context
+
+# pnpm
+pnpm add @diyor28/context
+
+# yarn
+yarn add @diyor28/context
 ```
 
 ## Quick Start
@@ -28,7 +41,7 @@ import {
   BUILT_IN_CODECS,
   AnthropicTokenEstimator,
   AnthropicCompiler,
-} from '@foundry/context';
+} from '@diyor28/context';
 
 // 1. Create a context builder with default policy
 const builder = new ContextBuilder({
@@ -122,7 +135,7 @@ const policy = {
 Implement the `BlockCodec` interface to create custom renderers:
 
 ```typescript
-import { BlockCodec, registerCodec } from '@foundry/context';
+import { BlockCodec, registerCodec } from '@diyor28/context';
 
 const myCodec: BlockCodec = {
   codecId: 'my-custom-codec',
@@ -151,7 +164,7 @@ registerCodec(myCodec);
 ### Anthropic Claude
 
 ```typescript
-import { AnthropicTokenEstimator, AnthropicCompiler } from '@foundry/context';
+import { AnthropicTokenEstimator, AnthropicCompiler } from '@diyor28/context';
 
 const estimator = new AnthropicTokenEstimator('claude-sonnet-4-5');
 const compiled = AnthropicCompiler.compile(graph);
@@ -160,7 +173,7 @@ const compiled = AnthropicCompiler.compile(graph);
 ### OpenAI GPT
 
 ```typescript
-import { OpenAITokenEstimator, OpenAICompiler } from '@foundry/context';
+import { OpenAITokenEstimator, OpenAICompiler } from '@diyor28/context';
 
 const estimator = new OpenAITokenEstimator('gpt-5.2');
 const compiled = OpenAICompiler.compile(graph);
@@ -169,7 +182,7 @@ const compiled = OpenAICompiler.compile(graph);
 ### Google Gemini
 
 ```typescript
-import { GeminiTokenEstimator, GeminiCompiler } from '@foundry/context';
+import { GeminiTokenEstimator, GeminiCompiler } from '@diyor28/context';
 
 const estimator = new GeminiTokenEstimator('gemini-3-pro-preview');
 const compiled = GeminiCompiler.compile(graph);
@@ -225,7 +238,7 @@ fork.addBlock({
 Smart selection of attachments based on budget and priority:
 
 ```typescript
-import { AttachmentSelector } from '@foundry/context';
+import { AttachmentSelector } from '@diyor28/context';
 
 const selector = new AttachmentSelector({
   maxTokensTotal: 10_000,
@@ -247,24 +260,34 @@ const selected = selector.select(attachments, tokenEstimator);
 
 ```bash
 # Run all tests
-pnpm test
+npm test
 
 # Run with coverage
-pnpm test:coverage
+npm run test:coverage
 
 # Watch mode
-pnpm test:watch
+npm run test:watch
 ```
 
-## Documentation
+## Contributing
 
-See `/docs` for detailed documentation:
+Contributions are welcome! Please:
 
-- Architecture overview
-- Token estimation guide
-- Custom codec development
-- Provider integration guide
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Run tests: `npm test`
+5. Run linting: `npm run lint`
+6. Submit a pull request
+
+## Issues
+
+Found a bug? Have a feature request? [Open an issue](https://github.com/iota-uz/context/issues) on GitHub.
+
+## Changelog
+
+See [CHANGELOG.md](./CHANGELOG.md) for version history and breaking changes.
 
 ## License
 
-MIT
+MIT - See [LICENSE](./LICENSE) for details
