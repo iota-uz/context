@@ -1,0 +1,15 @@
+# Source files and tests - only dist is published
+src/
+**/*.test.ts
+**/*.spec.ts
+__tests__/
+.github/
+.gitignore
+.npmignore
+eslint.config.mjs
+tsconfig.json
+vitest.config.ts
+postcss.config.js
+CHANGELOG.md
+.DS_Store
+.turbo/
