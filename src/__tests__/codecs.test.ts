@@ -404,7 +404,7 @@ describe('Codecs', () => {
     });
 
     it('should have all built-in codecs in registry', () => {
-      expect(Object.keys(BUILT_IN_CODECS)).toHaveLength(8);
+      expect(Object.keys(BUILT_IN_CODECS)).toHaveLength(9);
       expect(BUILT_IN_CODECS['system-rules']).toBeDefined();
       expect(BUILT_IN_CODECS['tool-schema']).toBeDefined();
       expect(BUILT_IN_CODECS['structured-reference']).toBeDefined();
@@ -412,6 +412,7 @@ describe('Codecs', () => {
       expect(BUILT_IN_CODECS['tool-output']).toBeDefined();
       expect(BUILT_IN_CODECS['redacted-stub']).toBeDefined();
       expect(BUILT_IN_CODECS['unsafe-text']).toBeDefined();
+      expect(BUILT_IN_CODECS['user-turn']).toBeDefined();
     });
   });
 });
