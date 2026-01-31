@@ -22,9 +22,11 @@ You cannot put system rules after conversation history. The type system won't al
 
 ### 2. Content-Addressed Blocks
 
-**Problem:** Duplicate context wastes tokens and confuses models. Manual deduplication is error-prone.
+**Problem:** Duplicate context wastes tokens and confuses models. Manual deduplication is error-prone. Provider caching requires stable identifiers to detect unchanged content.
 
 **Solution:** Every block is hashed from its canonical form. Add the same block twice? It's automatically deduplicated. Change a block slightly? It gets a new hash and both versions can coexist if needed.
+
+Stable hashes enable cache optimization: if a block's hash is unchanged, the provider can serve it from cache rather than reprocessing tokens. This compounds with immutability (§6) to maximize cache hit rates.
 
 ### 3. Codec-Based Rendering
 
@@ -46,9 +48,15 @@ You cannot put system rules after conversation history. The type system won't al
 
 ### 6. Immutable Graph Operations
 
-**Problem:** Shared mutable context leads to race conditions and debugging nightmares in concurrent systems.
+**Problem:** Provider-specific context caching (Anthropic's prompt caching, OpenAI's cached prompts) requires stable content prefixes. Mutable context makes cache hits impossible—every edit invalidates the entire cache.
 
-**Solution:** The `ContextGraph` is immutable. Operations return new graphs. Forks create isolated branches. You can safely pass context across async boundaries.
+**Solution:** The `ContextGraph` is immutable. Operations return new graphs. Combined with content-addressed blocks (stable hashes), this enables effective cache breakpoints:
+
+- Unchanged blocks → same hash → cache hit
+- Only new/modified content incurs token costs
+- Cache breakpoints can be placed at kind boundaries
+
+As a bonus, immutability also eliminates race conditions in concurrent systems and makes context safe to pass across async boundaries.
 
 ## Architecture
 
