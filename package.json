@@ -4,6 +4,7 @@
   "private": false,
   "description": "Context management library for LLM conversations with token budgeting and automatic compaction",
   "keywords": ["llm", "context", "token-budget", "ai", "anthropic", "openai", "gemini"],
+  "packageManager": "pnpm@10.19.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/iota-uz/context.git"
